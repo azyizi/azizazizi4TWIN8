@@ -4,8 +4,8 @@ pipeline {
     
     tools {
         // Ces noms doivent correspondre à ceux configurés dans Jenkins > Global Tool Configuration
-        jdk 'JAVA_HOME' 
-        maven 'M2_HOME' 
+        jdk 'JAVA-HOME' 
+        maven 'M2 HOME' 
     }
 
     stages {
