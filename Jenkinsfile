@@ -1,14 +1,8 @@
-// Jenkinsfile
 pipeline {
-    // Exécute le pipeline sur n'importe quel agent disponible (votre VM)
-    agent any
-    
-    // Déclaration des outils Maven et JDK.
-    // IMPORTANT : Si vous n'utilisez pas ces outils dans Jenkins, retirez ce bloc 'tools'.
-    tools {
-        jdk 'JAVA_HOME' 
-        maven 'M2_HOME' 
-    }
+
+ agent any
+
+ 
 
     stages {
         stage('Build and Test') {
