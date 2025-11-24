@@ -8,8 +8,8 @@ pipeline {
     }
 
     tools {
-        jdk 'JAVA HOME' 
-        maven 'M2_HOME' 
+        jdk 'JAVA-HOME' 
+        maven 'M2 HOME' 
     }
 
     stages {
