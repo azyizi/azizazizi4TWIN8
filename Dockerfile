@@ -1,8 +1,6 @@
 # Dockerfile
-# Utiliser une image de base Java allégée pour l'exécution
-# ⚠️ CORRECTION : Remplacer le tag '17-jdk-slim' par un tag plus sûr
-FROM openjdk:17-jdk-slim-buster
-# OU openjdk:17-jdk-slim-buster (si 17-slim ne fonctionne pas)
+# Utiliser le tag Java 17 le plus générique pour contourner les problèmes de manifeste
+FROM openjdk:17 
 
 # Définir le répertoire de travail dans le conteneur
 WORKDIR /app
