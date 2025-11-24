@@ -1,6 +1,8 @@
 # Dockerfile
-# Utiliser le tag Java 17 le plus générique pour contourner les problèmes de manifeste
-FROM openjdk:17 
+# Utiliser le registre Eclipse Temurin (souvent plus fiable que openjdk:XX direct)
+FROM eclipse-temurin:17-jre-focal
+# '17-jre-focal' donne Java Runtime Environment 17 basé sur Ubuntu Focal (20.04)
+# C'est l'équivalent stable et spécifique de 'openjdk:17-slim'
 
 # Définir le répertoire de travail dans le conteneur
 WORKDIR /app
