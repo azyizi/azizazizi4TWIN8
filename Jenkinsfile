@@ -1,10 +1,9 @@
-// Jenkinsfile (CORRIGÉ)
+// Jenkinsfile (AVEC LA CORRECTION DOCKER_BUILDKIT)
 pipeline {
     agent any
     
-    // NOUVEAU : Définir la variable dans le bloc environment pour un pipeline déclaratif
     environment {
-        DOCKER_USER_NAME = 'azizi02k' // <-- Assurez-vous que c'est bien votre nom d'utilisateur Docker Hub
+        DOCKER_USER_NAME = 'azizi02k' // Votre Nom d'utilisateur Docker Hub
     }
 
     tools {
@@ -13,28 +12,22 @@ pipeline {
     }
 
     stages {
-        stage('Clean and Build') {
-            steps {
-                echo 'Nettoyage et construction du projet Maven...'
-                sh 'mvn clean install -DskipTests' 
-            }
-        }
-        
+        // ... (Clean and Build inchangé) ...
+
         stage('Build Docker Image') {
             steps {
-                echo "Construction de l'image Docker: ${env.DOCKER_USER_NAME}/student-management:latest"
-                sh "docker build -t ${env.DOCKER_USER_NAME}/student-management:latest ." 
+                // AJOUT DE withEnv(['DOCKER_BUILDKIT=0']) POUR RÉSOUDRE L'ERREUR "not found"
+                withEnv(['DOCKER_BUILDKIT=0']) { 
+                    echo "Construction de l'image Docker: ${env.DOCKER_USER_NAME}/student-management:latest"
+                    sh "docker build -t ${env.DOCKER_USER_NAME}/student-management:latest ." 
+                }
             }
         }
         
         stage('Push Docker Image to Docker Hub') {
-            // ATTENTION : Le bloc withCredentials DOIT être DANS le bloc steps { ... }
             steps {
-                // Utilise l'ID de credential 'docker-hub-credentials' configuré dans Jenkins
                 withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
-                    
                     echo "Connexion à Docker Hub..."
-                    // Utilisation de la variable d'environnement DOCKER_USER et DOCKER_PASS fournies par withCredentials
                     sh "echo \$DOCKER_PASS | docker login -u \$DOCKER_USER --password-stdin"
                     
                     echo "Poussée de l'image Docker vers Docker Hub..."
