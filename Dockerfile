@@ -1,15 +1,16 @@
 # Dockerfile
 # Utiliser une image de base Java allégée pour l'exécution
-FROM openjdk:17-jdk-slim
+# ⚠️ CORRECTION : Remplacer le tag '17-jdk-slim' par un tag plus sûr
+FROM openjdk:17-slim 
+# OU openjdk:17-jdk-slim-buster (si 17-slim ne fonctionne pas)
 
 # Définir le répertoire de travail dans le conteneur
 WORKDIR /app
 
-# Copier l'artefact JAR du build Maven (supposant que le nom est student-management.jar)
-# Le nom exact du fichier peut varier.
+# Copier l'artefact JAR du build Maven 
 COPY target/student-management*.jar /app/app.jar
 
-# Exposer le port par défaut de l'application (ex: 8080 pour Spring Boot)
+# Exposer le port par défaut de l'application
 EXPOSE 8089
 
 # Définir la commande d'exécution
